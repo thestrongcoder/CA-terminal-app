@@ -1,5 +1,7 @@
 require "tty-prompt"
 prompt = TTY::Prompt.new
+require 'artii'
+artii = Artii::Base.new
 product_list = {}
 # quit = false
 
@@ -31,6 +33,8 @@ File.open('product_list.csv').each do |line|
   product_list.store(product[0], Product.new(product[0], product[1], product[2], product[3]))
 end
 
+puts artii.asciify('TELEMAX')
+
 # select from a menu 
 user_input = prompt.select("What would you like to do?") do |menu|
     menu.choice('search')
@@ -39,6 +43,9 @@ user_input = prompt.select("What would you like to do?") do |menu|
 end
 
 if user_input == 'create product'
+    puts "enter the code"
+    code_input = gets.chomp.to_i
+
     puts "enter the description"
     desc_input = gets.chomp.to_s
     
@@ -71,7 +78,7 @@ if user_input == 'full product list'
     product_list.each_value do |product|
     product.show_product
     end
-end 
+end
 
 # search products
 if user_input == 'search'
@@ -81,17 +88,36 @@ if user_input == 'search'
             item.choice(product.description, product.code)
         end
     end
+    product_list[search_input].show_product()
+
+        product_list.has_key?(search_input)
+        puts product_list[search_input].code
+
+        puts "enter code"
+        new_code = gets.chomp
+        product_list[search_input].code = new_code
+
+        puts "enter new description"
+        new_desc = gets.chomp
+        product_list[search_input].description = new_desc
+
+        puts "enter new price?"
+        new_price = gets.chomp
+        product_list[search_input].price = new_price
+    
+        puts "enter new quantity"
+        new_qty = gets.chomp
+        product_list[search_input].quantity = new_qty
+
+
+        puts "changes made to the product:"
+        puts "Part Number: #{new_code}"
+        puts "Description: #{new_desc}"
+        puts "Price: #{new_price}"
+        puts "Quantitiy: #{new_qty}"
+
 
     # show the selected product key and values
-    puts product_list[search_input].show_product()
+    product_list[search_input].show_product()
+
 end
-    
-
-
-
-
-
-    
-
-
-
