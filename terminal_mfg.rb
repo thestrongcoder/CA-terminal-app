@@ -37,11 +37,42 @@ user_input = prompt.select("What would you like to do?") do |menu|
     menu.choice('full product list')
     menu.choice('create product')
 end
+
+if user_input == 'create product'
+    puts "enter the description"
+    desc_input = gets.chomp.to_s
+    
+    puts "enter the sale price"
+    price_input = gets.chomp.to_f
+      
+    puts "enter the quantity on hand"
+    qty_input = gets.chomp.to_i
+
+    puts "enter its code"
+    code_input = gets.chomp.to_i
+
+    puts "The new product:"
+    puts "Part Number: #{code_input}"
+    puts "Description: #{desc_input}"
+    puts "Price: #{price_input}"
+    puts "Quantitiy: #{qty_input}"
+    
+    #append to the csv database
+    File.open("product_list.csv", 'a') { |file| file.write("\n#{code_input}, #{desc_input}, #{price_input}, #{qty_input}") }
+    puts "Product added to database"
+
+end
+
 if user_input == 'full product list'
+    File.open('product_list.csv').each do |line|
+        product = line.chomp.split(",")
+        product_list.store(product[0], Product.new(product[0], product[1], product[2], product[3]))
+    end
     product_list.each_value do |product|
     product.show_product
     end
 end 
+
 # search products
 if user_input == 'search'
     search_product = %w()
@@ -50,29 +81,15 @@ if user_input == 'search'
             item.choice(product.description, product.code)
         end
     end
+
     # show the selected product key and values
     puts product_list[search_input].show_product()
 end
-
-if user_input == 'create product'
-    code = 10051
-    code += 1
-    puts "enter the description"
-    desc_input = gets.chomp.to_s
-   
-    puts "enter the sale price"
-    price_input = gets.chomp.to_f
     
-    puts "enter the quantity on hand"
-    qty_input = gets.chomp.to_i
 
-    puts "The new product:"
-    puts "Part Number: #{code}"
-    puts "Description: #{desc_input}"
-    puts "Price: #{price_input}"
-    puts "Quantitiy: #{qty_input}"
 
-end
+
+
 
     
 
