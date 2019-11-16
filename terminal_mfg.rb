@@ -13,7 +13,7 @@ class Product
     end
 
     def show_product()
-        puts "Part Number: #{@code} "
+        puts "Part Number: #{@code}"
         puts "Description: #{@description}"
         puts "Price: #{@price}"
         puts "Quantitiy: #{@quantity}"
@@ -35,8 +35,18 @@ user_input = prompt.select("What would you like to do?") do |menu|
     menu.choice('search')
     menu.choice('full product list')
 end
-    if user_input == 'full product list'
-        product_list.each_value do |product|
-            product.show_product
+if user_input == 'full product list'
+    product_list.each_value do |product|
+    product.show_product
+    end
+end 
+# search products
+if user_input == 'search'
+    search_product = %w()
+    search_input = prompt.select('Search for a product', filter: true, require: true) do |item|
+        product_list.each_value do |value|
+            item.choice(value.description)
         end
     end
+end
+
