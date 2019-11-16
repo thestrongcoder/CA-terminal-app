@@ -54,5 +54,27 @@ if user_input == 'search'
     puts product_list[search_input].show_product()
 end
 
+if user_input == 'create product'
+    code = 10051
+    code += 1
+    puts "enter the description"
+    desc_input = gets.chomp.to_s
+   
+    puts "enter the sale price"
+    price_input = gets.chomp.to_f
+    
+    puts "enter the quantity on hand"
+    qty_input = gets.chomp.to_i
+
+    puts "The new product:"
+    puts "Part Number: #{code}"
+    puts "Description: #{desc_input}"
+    puts "Price: #{price_input}"
+    puts "Quantitiy: #{qty_input}"
+
+end
+
+    
+
 
 
