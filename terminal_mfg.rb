@@ -25,7 +25,6 @@ end
 def write_product_to_file(product, file)
     #append to the csv database
     File.open(file, 'a') { |file| file.write("\n"+product.to_s) }
-    puts "Product successfully added to database"
 end
 
 def write_product_list(product_list, file)
@@ -33,6 +32,11 @@ def write_product_list(product_list, file)
     product_list.each_value do |product|
         write_product_to_file(product, file)
     end
+end
+
+def clear_product_list()
+    #truncate csv data prior to writing data to file using the edit product feature
+    File.truncate('product_list.csv', 0)
 end
 
 
@@ -51,7 +55,7 @@ def create_product(product_list)
 
     # create a new product and add to product_list
     new_product = Product.new(code, description, price, quantity)
-    product_list.store(new_product[:code],new_product)
+    product_list.store(new_product.code, new_product)
     
     #append to the csv database
     write_product_to_file(new_product, "product_list.csv")
@@ -101,7 +105,7 @@ def edit_product(product_list, prompt=TTY::Prompt.new)
 
     puts "changes made to the product:"
     product_to_update.show_product
-    
+    clear_product_list()
     write_product_list(product_list, "product_list.csv")
 
     # show the selected product key and values
@@ -129,8 +133,7 @@ until quit
     when 'full product list' 
         full_product_list(product_list)
         
-    when 'edit product' 
-        # search_product(product_list)   
+    when 'edit product'  
         edit_product(product_list)    
 
     when 'create a job'    
