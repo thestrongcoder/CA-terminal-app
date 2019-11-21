@@ -2,6 +2,7 @@
 # global variable declarations
 require 'artii'
 require "tty-prompt"
+require "colorize"
 require_relative "./product"
 require_relative "./utilities"
 
@@ -20,8 +21,9 @@ until quit
         menu.choice('full product list')
         menu.choice('edit product')
         menu.choice('create product')
-        menu.choice('create a job')
+        menu.choice('create a job order request')
         menu.choice('exit')
+        menu.choice('help')
     end
     # Respond to user input
     case user_input
@@ -34,25 +36,20 @@ until quit
     when 'edit product'  
         edit_product(product_list)    
 
-    when 'create a job'    
-        search_product(product_list)
-        puts "Provide quantity for the order"
-        order_qty = gets.chomp
-        # if order_qty = (math to less quantity in database)
-        #     puts "do something"
-        #       create a txt file 
-        #       update csv if possible
-        # elsif quantity is below 0
-        #     puts "contact supplier to order more stock"
-        # else 
-        #   puts "access denied"
-        # end
+    when 'create a job order request'    
+        product_order(product_list)
+       
 
     when 'exit'
         puts artii.asciify('GOODBYE')
         quit = true
 
-    else 
-        puts "Ummm .. something is wrong"
+    when 'help'
+        puts "To search and create a product, select 'create a product'"
+        puts "To search and edit a product, select 'edit product'"
+        puts "To view the full list of products in the database, select 'full product list'"
+        puts "To request a job order, please select 'job request'"
+        puts "To exit application, please select 'exit'"
+        puts "for additional support, view the software documentation"
     end
 end
