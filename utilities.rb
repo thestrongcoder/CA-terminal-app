@@ -103,3 +103,24 @@ def edit_product(product_list, prompt=TTY::Prompt.new)
     # show the selected product key and values
     product_to_update.show_product()
 end
+
+def product_order(product_list, prompt=TTY::Prompt.new)
+    search_product = %w()
+    search_input = prompt.select('Select a product', filter: true, require: true) do |item|
+        product_list.each_value do |product|
+            item.choice(product.description, product.code)
+        end
+    end
+    
+        puts "Provide quantity for the order"
+        order_qty = gets.chomp
+        product_to_order = product_list[search_input]
+        if order_qty >= "1"
+        puts "printing new job request to production" 
+        puts ""
+        else
+        puts "Something went wrong, please try again" 
+        puts ""
+        end
+end
+
